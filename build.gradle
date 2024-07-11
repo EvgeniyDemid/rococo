@@ -3,11 +3,30 @@ plugins {
 }
 
 group = 'guru.qa'
-sourceCompatibility = '17'
+sourceCompatibility = '21'
 
 subprojects {
     repositories {
         mavenCentral()
+        maven {
+            url = uri("https://repo1.maven.org/maven2/")
+        }
+    }
+    ext {
+        dockerHubName = "demidov"
+        lombokVersion = '1.18.32'
+        springKafka = '3.1.4'
+        postgresDriverVersion = '42.7.3'
+        oauth2AuthorizationServerVersion = '1.2.4'
+        jsr305Version = '3.0.2'
+        registry = 'yaroslavmorenov'
+
+        dockerImage = System.getProperty("os.arch") == "aarch64" || System.getProperty("os.arch") == "arm64"
+                ? "arm64v8/eclipse-temurin:19-jre"
+                : "eclipse-temurin:19-jre"
+        dockerArch = System.getProperty("os.arch") == "aarch64" || System.getProperty("os.arch") == "arm64"
+                ? "arm64"
+                : "amd64"
     }
 }
 
