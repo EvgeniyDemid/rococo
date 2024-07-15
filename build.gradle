@@ -19,7 +19,8 @@ subprojects {
         postgresDriverVersion = '42.7.3'
         oauth2AuthorizationServerVersion = '1.2.4'
         jsr305Version = '3.0.2'
-        registry = 'yaroslavmorenov'
+        registry = 'demidovevgeniy'
+        flywayVersion = '9.22.3'
 
         dockerImage = System.getProperty("os.arch") == "aarch64" || System.getProperty("os.arch") == "arm64"
                 ? "arm64v8/eclipse-temurin:19-jre"

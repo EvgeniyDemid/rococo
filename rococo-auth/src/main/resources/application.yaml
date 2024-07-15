@@ -63,7 +63,7 @@ spring:
   kafka:
     bootstrap-servers: 'localhost:9092'
   datasource:
-    url: 'jdbc:postgresql://localhost:5432/niffler-auth'
+    url: 'jdbc:postgresql://localhost:5432/rococo-auth'
     username: postgres
     password: secret
 rococo-front:
@@ -86,13 +86,13 @@ spring:
   kafka:
     bootstrap-servers: 'kafka:9092'
   datasource:
-    url: 'jdbc:postgresql://niffler-all-db:5432/niffler-auth'
+    url: 'jdbc:postgresql://rococo-all-db:5432/rococo-auth'
     username: postgres
     password: secret
 rococo-front:
-  base-uri: 'http://frontend.niffler.dc'
+  base-uri: 'http://frontend.rococo.dc'
 rococo-auth:
-  base-uri: 'http://auth.niffler.dc:9000'
+  base-uri: 'http://auth.rococo.dc:9000'
 oauth2:
   client-id: 'client'
   client-secret: '{noop}secret'
@@ -117,9 +117,9 @@ spring:
     username: ${db.username}
     password: ${db.password}
 rococo-front:
-  base-uri: 'https://niffler.qa.guru'
+  base-uri: 'https://rococo.qa.guru'
 rococo-auth:
-  base-uri: 'https://auth.niffler.qa.guru'
+  base-uri: 'https://auth.rococo.qa.guru'
 oauth2:
   client-id: ${client-id}
   client-secret: ${client-secret}
@@ -144,9 +144,9 @@ spring:
     username: ${db.username}
     password: ${db.password}
 rococo-front:
-  base-uri: 'https://niffler-stage.qa.guru'
+  base-uri: 'https://rococo-stage.qa.guru'
 rococo-auth:
-  base-uri: 'https://auth.niffler-stage.qa.guru'
+  base-uri: 'https://auth.rococo-stage.qa.guru'
 oauth2:
   client-id: ${client-id}
   client-secret: ${client-secret}
