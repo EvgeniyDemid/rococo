@@ -5,31 +5,28 @@ plugins {
     id 'com.google.cloud.tools.jib' version '3.3.2'
 }
 
+group 'org.rococo'
 version = '0.0.1-SNAPSHOT'
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation "org.springframework.boot:spring-boot-starter-thymeleaf"
-    implementation "org.springframework.boot:spring-boot-starter-validation"
-    implementation "org.springframework.security:spring-security-oauth2-authorization-server:${project.ext.oauth2AuthorizationServerVersion}"
-    implementation "org.springframework.kafka:spring-kafka:${project.ext.springKafka}"
-    implementation "org.flywaydb:flyway-core:${project.ext.flywayVersion}"
-    implementation "com.google.code.findbugs:jsr305:${project.ext.jsr305Version}"
+    implementation "org.springframework:spring-webflux"
     annotationProcessor "org.projectlombok:lombok:${project.ext.lombokVersion}"
     compileOnly "org.projectlombok:lombok:${project.ext.lombokVersion}"
     runtimeOnly 'org.postgresql:postgresql'
-
-
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation "org.flywaydb:flyway-core:${project.ext.flywayVersion}"
 }
-
 
 jib {
     container {
-        ports = ['9000']
-        jvmFlags = ["-Dspring.profiles.active=${System.env.PROFILE}"]
+        ports = ['8098']
+        jvmFlags = ["-Dspring.profiles.active=docker"]
         creationTime = 'USE_CURRENT_TIMESTAMP'
     }
     from {
@@ -47,6 +44,12 @@ jib {
     }
 }
 
-tasks.named('test') {
+tasks.register('printVersion') {
+    doLast {
+        println project.version
+    }
+}
+
+test {
     useJUnitPlatform()
 }
