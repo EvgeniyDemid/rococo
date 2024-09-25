@@ -10,8 +10,8 @@ public class RegisterSteps {
 	RegisterPage registerPage = new RegisterPage();
 
 	@Step("Ввести имя пользователя {username}")
-	public RegisterSteps setUserName(String userName){
-	registerPage.onRegisterForm().userNameInput.setValue(userName);
+	public RegisterSteps setUserName(String username){
+	registerPage.onRegisterForm().userNameInput.setValue(username);
 	return new RegisterSteps();
 	}
 

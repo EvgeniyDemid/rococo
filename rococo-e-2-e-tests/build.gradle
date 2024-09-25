@@ -10,6 +10,9 @@ buildscript {
         googleVersion = '4.2.2'
         logbackVersion = '1.4.11'
         slf4jVersion = '2.0.9'
+        springJdbcVersion = '6.1.6'
+        springCryptoVersion = '6.2.3'
+        p6spyVersion = '3.9.1'
     }
 }
 
@@ -45,6 +48,12 @@ dependencies {
     // Utils
     testImplementation"com.github.javafaker:javafaker:${fakerVersion}"
 
+    // DB
+    testImplementation "org.springframework:spring-jdbc:${springJdbcVersion}"
+    testImplementation "org.postgresql:postgresql:${project.ext.postgresDriverVersion}"
+    testImplementation "org.springframework.security:spring-security-crypto:${springCryptoVersion}"
+    testImplementation "p6spy:p6spy:${p6spyVersion}"
+
     // REST
     testImplementation "com.squareup.retrofit2:retrofit:${retrofitVersion}"
     testImplementation "com.squareup.retrofit2:converter-jackson:${retrofitVersion}"
@@ -52,6 +61,9 @@ dependencies {
     testImplementation "com.squareup.okhttp3:okhttp-urlconnection:${okhttp3Version}"
     testImplementation "org.springframework.data:spring-data-commons:${springDataCommonsVersion}"
 
+    // Lombok
+    testAnnotationProcessor "org.projectlombok:lombok:${project.ext.lombokVersion}"
+    testCompileOnly "org.projectlombok:lombok:${project.ext.lombokVersion}"
 
     // WEB
     testImplementation "com.codeborne:selenide:${selenideVersion}"

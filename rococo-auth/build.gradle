@@ -21,6 +21,7 @@ dependencies {
     compileOnly "org.projectlombok:lombok:${project.ext.lombokVersion}"
     runtimeOnly 'org.postgresql:postgresql'
 
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
