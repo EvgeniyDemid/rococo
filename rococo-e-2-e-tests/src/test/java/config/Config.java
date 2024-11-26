@@ -16,6 +16,10 @@ public interface Config {
 
 	String dbHost();
 
+	String authUrl();
+
+	String gatewayUrl();
+
 	default int dbPort() {
 		return 5432;
 	}

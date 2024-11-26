@@ -13,6 +13,8 @@ buildscript {
         springJdbcVersion = '6.1.6'
         springCryptoVersion = '6.2.3'
         p6spyVersion = '3.9.1'
+        restAssured = '5.4.0'
+        allureOkHttp3 = '2.24.0'
     }
 }
 
@@ -46,7 +48,8 @@ dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
 
     // Utils
-    testImplementation"com.github.javafaker:javafaker:${fakerVersion}"
+    testImplementation "com.github.javafaker:javafaker:${fakerVersion}"
+    testImplementation 'com.github.vertical-blank:sql-formatter:2.0.3'
 
     // DB
     testImplementation "org.springframework:spring-jdbc:${springJdbcVersion}"
@@ -60,6 +63,7 @@ dependencies {
     testImplementation "com.squareup.okhttp3:logging-interceptor:${okhttp3Version}"
     testImplementation "com.squareup.okhttp3:okhttp-urlconnection:${okhttp3Version}"
     testImplementation "org.springframework.data:spring-data-commons:${springDataCommonsVersion}"
+    testImplementation "io.rest-assured:rest-assured:${restAssured}"
 
     // Lombok
     testAnnotationProcessor "org.projectlombok:lombok:${project.ext.lombokVersion}"
@@ -67,6 +71,11 @@ dependencies {
 
     // WEB
     testImplementation "com.codeborne:selenide:${selenideVersion}"
+
+    // Allure
+    testImplementation "io.qameta.allure:allure-attachments:${allureVersion}"
+    testImplementation "io.qameta.allure:allure-rest-assured:${allureVersion}"
+    testImplementation "io.qameta.allure:allure-okhttp3:${allureOkHttp3}"
 
 }
 

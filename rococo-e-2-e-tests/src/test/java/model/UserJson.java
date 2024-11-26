@@ -32,6 +32,16 @@ public record UserJson(
 				faker.name().firstName(),
 				faker.name().lastName(),
 				null,
-				faker.internet().password());
+				String.valueOf((int) (Math.random() * 10000)));
+	}
+
+	public static UserJson userJsonByUserNameAndPassword(String username,String password) {
+		return new UserJson(
+				null,
+				username,
+				faker.name().firstName(),
+				faker.name().lastName(),
+				null,
+				password);
 	}
 }

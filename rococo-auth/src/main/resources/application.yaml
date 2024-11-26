@@ -48,7 +48,7 @@ logging:
     org.springframework.security.oauth2: INFO
     org.springframework.web.cors: INFO
     org.apache.catalina.filters.RequestDumperFilter: DEBUG
-#    org.springframework.boot.autoconfigure: DEBUG
+  #    org.springframework.boot.autoconfigure: DEBUG
 
 ---
 spring:

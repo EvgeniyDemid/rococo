@@ -7,9 +7,11 @@ import ui.page.LoginPage;
 import static com.codeborne.selenide.Condition.attribute;
 import static com.codeborne.selenide.Condition.text;
 
-public class LoginSteps {
+public class LoginSteps extends CommonSteps<LoginSteps> {
 
 	LoginPage loginPage = new LoginPage();
+
+
 
 	@Step("Нажать на кнопку Зарегистрироваться")
 	public RegisterSteps clickRegister() {
@@ -35,12 +37,6 @@ public class LoginSteps {
 		return new MainPageSteps();
 	}
 
-	@Step("Проверить текст ошибки  '{error}'")
-	public LoginSteps checkErrorText(String error) {
-		loginPage.onLoginForm().error.shouldHave(text(error));
-		return this;
-	}
-
 	@Step("Нажать на кнопку показать пароль")
 	public LoginSteps clickShowPassword() {
 		loginPage.onLoginForm().showPasswordButton.click();
@@ -63,4 +59,23 @@ public class LoginSteps {
 		loginPage.onLoginForm().userNameInput.preceding(0).shouldHave(text(fieldName));
 		return this;
 	}
+
+	@Step("Проверить placeholder : {placeholder} для поля 'Имя пользователя'")
+	public LoginSteps checkPlaceholderNameField(String placeholder) {
+		loginPage.onLoginForm().userNameInput.shouldHave(attribute("placeholder",placeholder));
+		return this;
+	}
+
+	@Step("Проверить название поля {fieldName} ")
+	public LoginSteps checkPasswordField(String fieldName) {
+		loginPage.onLoginForm().passwordInput.preceding(0).shouldHave(text(fieldName));
+		return this;
+	}
+
+	@Step("Проверить placeholder : {placeholder} для поля 'Пароль'")
+	public LoginSteps checkPlaceholderPasswordField(String placeholder) {
+		loginPage.onLoginForm().passwordInput.shouldHave(attribute("placeholder",placeholder));
+		return this;
+	}
+
 }

@@ -14,6 +14,8 @@ subprojects {
     }
     ext {
         dockerHubName = "demidov"
+
+        dockerHubName = "demidov"
         lombokVersion = '1.18.32'
         springKafka = '3.1.4'
         postgresDriverVersion = '42.7.3'

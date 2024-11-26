@@ -6,9 +6,11 @@ import ui.page.MainPage;
 
 import static com.codeborne.selenide.Condition.visible;
 
-public class MainPageSteps {
+public class MainPageSteps extends CommonSteps<MainPageSteps> {
 
 	MainPage mainPage = new MainPage();
+
+	public static final String URL = CFG.frontUrl();
 
 	@Step("Нажать кнопку войти")
 	public LoginSteps clickLogin() {
@@ -16,9 +18,21 @@ public class MainPageSteps {
 		return new LoginSteps();
 	}
 
+	@Step("Проверить,что кнопка войти отображается ")
+	public LoginSteps loginButtonIsVisible() {
+		mainPage.onHeaderForm().loginButton.shouldBe(visible);
+		return new LoginSteps();
+	}
+
 	@Step("Проверить, что логотип Rococo отображается ")
-	public MainPage checkRococoLogo(){
-	mainPage.onHeaderForm().titleRococo.shouldBe(visible);
-	return new MainPage();
+	public MainPageSteps checkRococoLogo() {
+		mainPage.onHeaderForm().titleRococo.shouldBe(visible);
+		return this;
+	}
+
+	@Step("Нажать на кнопку Художники")
+	public ArtistSteps clickArtist() {
+		mainPage.onHeaderForm().artistButton.click();
+		return new ArtistSteps();
 	}
 }

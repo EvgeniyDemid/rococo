@@ -1,9 +1,12 @@
 package jupiter.extension;
 
+import api.cookie.ThreadSafeCookieStore;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
+import config.Config;
 import io.qameta.allure.Allure;
 import org.junit.jupiter.api.extension.*;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.OutputType;
 
 import java.io.ByteArrayInputStream;
@@ -11,7 +14,8 @@ import java.util.Objects;
 
 public class BrowserExtension implements TestExecutionExceptionHandler,
 		AfterEachCallback,
-		LifecycleMethodExecutionExceptionHandler{
+		LifecycleMethodExecutionExceptionHandler,
+		BeforeTestExecutionCallback {
 
 	@Override
 	public void handleTestExecutionException(ExtensionContext context, Throwable throwable) throws Throwable {
@@ -48,6 +52,20 @@ public class BrowserExtension implements TestExecutionExceptionHandler,
 	public void afterEach(ExtensionContext context) throws Exception {
 		if (WebDriverRunner.hasWebDriverStarted()) {
 			Selenide.closeWebDriver();
+		}
+	}
+	@Override
+	public void beforeTestExecution(ExtensionContext context) throws Exception {
+		if (ApiLoginExtension.getToken() != null) {
+			Selenide.open(Config.getInstance().frontUrl());
+			Selenide.localStorage().setItem("id_token", ApiLoginExtension.getToken());
+			WebDriverRunner.getWebDriver().manage()
+					.addCookie(
+							new Cookie(
+									"JSESSIONID",
+									ThreadSafeCookieStore.INSTANCE.getCookieValue("JSESSIONID")
+							)
+					);
 		}
 	}
 }

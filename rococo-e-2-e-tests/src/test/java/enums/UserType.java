@@ -2,6 +2,7 @@ package enums;
 
 public enum UserType {
 
-	REGISTERED,
-	RANDOM_USER
+	RANDOM_REGISTERED_USER,
+	RANDOM_NO_REGISTERED_USER,
+	REGISTERED
 }

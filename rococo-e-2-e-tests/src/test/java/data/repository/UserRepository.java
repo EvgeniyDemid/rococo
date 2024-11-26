@@ -3,7 +3,6 @@ package data.repository;
 import data.entity.UserAuthEntity;
 import data.entity.UserEntity;
 
-import java.util.Optional;
 import java.util.UUID;
 
 public interface UserRepository {
@@ -12,5 +11,9 @@ public interface UserRepository {
 
 	UserEntity createUserInUserdata(UserEntity userEntity);
 
-	Optional<UserEntity> findUserInUserdataById(UUID id);
+	UserEntity findUserInUserdataById(UUID id);
+
+	UserEntity findUserInUserdataByUserName(String username);
+
+	void deleteUserByUserName(String username);
 }

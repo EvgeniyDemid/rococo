@@ -6,7 +6,6 @@ import data.entity.UserEntity;
 import data.sjdbc.DataSourceProvider;
 import data.sjdbc.UserEntityRowMapper;
 import enums.Authority;
-import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -14,6 +13,7 @@ import org.springframework.jdbc.support.JdbcTransactionManager;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import java.sql.PreparedStatement;
@@ -91,17 +91,38 @@ public class UserRepositoryStringJdbc implements UserRepository {
 	}
 
 	@Override
-	public Optional<UserEntity> findUserInUserdataById(UUID id) {
-		try {
-			return Optional.of(
-					jdbcUDTemplate.queryForObject(
-							"SELECT * FROM \"user\" WHERE id = ?",
-							UserEntityRowMapper.instance,
-							id
-					)
-			);
-		} catch (DataRetrievalFailureException e) {
-			return Optional.empty();
-		}
+	public UserEntity findUserInUserdataById(UUID id) {
+		Optional<UserEntity> user = Optional.ofNullable(jdbcUDTemplate.queryForObject(
+						"SELECT * FROM \"user\" WHERE id = ?",
+						UserEntityRowMapper.instance,
+						id
+				)
+		);
+		return user.orElse(null);
+	}
+
+	@Override
+	public UserEntity findUserInUserdataByUserName(String username) {
+		Optional<UserEntity> user = Optional.ofNullable(jdbcUDTemplate.queryForObject(
+						"SELECT * FROM \"user\" WHERE username = ?",
+						UserEntityRowMapper.instance,
+						username
+				)
+		);
+		return user.orElse(null);
+	}
+
+	@Override
+	@Transactional
+	public void deleteUserByUserName(String username) {
+		jdbcAuthTemplate.update(
+				"DELETE  FROM \"authority\"  WHERE user_id=(select id from \"user\" where username = ?)",
+				username
+		);
+
+		jdbcAuthTemplate.update(
+				"DELETE  FROM \"user\" WHERE username = ?",
+				username
+		);
 	}
 }
