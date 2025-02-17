@@ -35,4 +35,14 @@ public class MainPageSteps extends CommonSteps<MainPageSteps> {
 		mainPage.onHeaderForm().artistButton.click();
 		return new ArtistSteps();
 	}
+	@Step("Нажать на кнопку Картины")
+	public PaintingSteps clickPainting() {
+		mainPage.onHeaderForm().paintButton.click();
+		return new PaintingSteps();
+	}
+	@Step("Нажать на кнопку Музеи")
+	public MuseumSteps clickMuseum() {
+		mainPage.onHeaderForm().museumButton.click();
+		return new MuseumSteps();
+	}
 }

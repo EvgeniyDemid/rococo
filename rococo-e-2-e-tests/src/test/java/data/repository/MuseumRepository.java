@@ -9,4 +9,5 @@ public interface MuseumRepository {
 	MuseumEntity updateMuseum (MuseumEntity museumEntity);
 	MuseumEntity findByIdMuseum (UUID id);
 	void deleteMuseum (UUID id);
+	void deleteMuseumByName(String name);
 }

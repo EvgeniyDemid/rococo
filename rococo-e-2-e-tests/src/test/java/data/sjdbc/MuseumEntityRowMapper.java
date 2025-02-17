@@ -19,7 +19,7 @@ public class MuseumEntityRowMapper implements RowMapper<MuseumEntity> {
 		museum.setDescription(rs.getString("description"));
 		museum.setCity(rs.getString("city"));
 		museum.setPhoto(rs.getString("photo"));
-		museum.setCountryId((UUID) rs.getObject("county_id"));
+		museum.setCountryId((UUID) rs.getObject("country_id"));
 		return museum;
 	}
 }

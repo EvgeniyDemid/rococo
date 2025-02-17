@@ -13,6 +13,7 @@ import static enums.Fields.PASSWORD;
 import static enums.Fields.USER_NAME;
 import static enums.UserType.*;
 
+@DisplayName("Авторизация")
 public class AuthorizationTest extends BaseWebTest {
 
 	@BeforeEach

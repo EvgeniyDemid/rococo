@@ -8,8 +8,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.util.Optional;
 import java.util.UUID;
@@ -23,21 +21,15 @@ public class MuseumRepositorySpringJdbc implements MuseumRepository {
 		KeyHolder kh = new GeneratedKeyHolder();
 		jdbcMuseumTemplate.update(con -> {
 					PreparedStatement ps = con.prepareStatement(
-							"INSERT INTO museum (title,description,city,photo,country_id)" +
-									"VALUES(?,?,?,?,?)",
+							"INSERT INTO museum (title,description,city,country_id)" +
+									"VALUES(?,?,?,?)",
 							PreparedStatement.RETURN_GENERATED_KEYS
 					);
-					try {
-						FileInputStream fis = new FileInputStream(museumEntity.getPhoto());
-						ps.setString(1, museumEntity.getTitle());
-						ps.setString(2, museumEntity.getDescription());
-						ps.setString(3, museumEntity.getCity());
-						ps.setBinaryStream(4, fis, fis.available());
-						ps.setObject(5, museumEntity.getCountryId());
-						return ps;
-					} catch (IOException e) {
-						throw new RuntimeException(e);
-					}
+					ps.setString(1, museumEntity.getTitle());
+					ps.setString(2, museumEntity.getDescription());
+					ps.setString(3, museumEntity.getCity());
+					ps.setObject(4, museumEntity.getCountryId());
+					return ps;
 				}, kh
 		);
 		museumEntity.setId((UUID) kh.getKeys().get("id"));
@@ -47,11 +39,10 @@ public class MuseumRepositorySpringJdbc implements MuseumRepository {
 	@Override
 	public MuseumEntity updateMuseum(MuseumEntity museumEntity) {
 		jdbcMuseumTemplate.update(
-				"UPDATE public.museum SET title = ? description=?, city=?, photo=?, country_id=? WHERE id=?",
+				"UPDATE public.museum SET title = ? description=?, city=?, country_id=? WHERE id=?",
 				museumEntity.getTitle(),
 				museumEntity.getDescription(),
 				museumEntity.getCity(),
-				museumEntity.getPhoto(),
 				museumEntity.getCountryId(),
 				museumEntity.getId()
 		);
@@ -73,6 +64,13 @@ public class MuseumRepositorySpringJdbc implements MuseumRepository {
 		jdbcMuseumTemplate.update(
 				"DELETE FROM museum WHERE id = ?",
 				id
+		);
+	}
+	@Override
+	public void deleteMuseumByName(String name) {
+		jdbcMuseumTemplate.update(
+				"DELETE FROM museum WHERE title = ?",
+				name
 		);
 	}
 }

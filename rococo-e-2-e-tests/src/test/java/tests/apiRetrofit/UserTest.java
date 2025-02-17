@@ -5,6 +5,7 @@ import jupiter.annotation.ApiLogin;
 import jupiter.annotation.TestUser;
 import jupiter.annotation.meta.ApiTest;
 import model.UserJson;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -19,6 +20,7 @@ public class UserTest {
 	@Test
 	@ApiLogin()
 	@TestUser(USER_TYPE = RANDOM_REGISTERED_USER)
+	@DisplayName("Проверить профиль пользователя")
 	public void userProfile(UserJson userJson) throws IOException {
 		UserJson actualUser = userServiceClient.userProfile();
 		checkUserProfile(userJson,actualUser);
@@ -27,6 +29,7 @@ public class UserTest {
 	@Test
 	@ApiLogin()
 	@TestUser(USER_TYPE = RANDOM_REGISTERED_USER)
+	@DisplayName("Обновить профиль пользователя")
 	public void userProfileUpdate(UserJson userJson) throws IOException {
 		UserJson editUser = new UserJson(
 				userJson.id(),

@@ -2,7 +2,11 @@ package model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import data.entity.ArtistEntity;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import testData.RandomData;
 
 import java.util.UUID;
 
@@ -27,6 +31,16 @@ public class ArtistJson {
 				artistEntity.getName(),
 				artistEntity.getBiography(),
 				artistEntity.getPhoto()
+		);
+	}
+
+	public ArtistJson random() {
+		RandomData randomData = new RandomData();
+		return new ArtistJson(
+				null,
+				randomData.randomArtist(),
+				randomData.randomBiography(),
+				randomData.photoArtist()
 		);
 	}
 }

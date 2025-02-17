@@ -10,6 +10,6 @@ public class CommonElements {
 			searchInput = $x("//input[@type='search']"),
 			searchButton = $x("//input[@type='search']/../button"),
 			closeButton = $x("//button[contains(text(),'Закрыть')]"),
-			addButton = $x("//button[@type='submit']");
-
+			submitButton = $x("//button[@type='submit']"),
+			alert= $x("//div[@class='text-base']");
 }

@@ -19,4 +19,5 @@ public interface UserService {
 			@Header("Authorization") String basicAuthorizationHeader,
 			@Body UserJson userJson
 	);
+
 }

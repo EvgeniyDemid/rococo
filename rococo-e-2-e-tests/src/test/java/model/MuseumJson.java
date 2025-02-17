@@ -2,14 +2,18 @@ package model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import data.entity.MuseumEntity;
+import data.repository.CountryRepositorySpringJdbc;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import testData.RandomData;
 
 import java.util.UUID;
 
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class MuseumJson {
 
@@ -24,4 +28,32 @@ public class MuseumJson {
 	@JsonProperty("geo")
 	GeoJson geo;
 
+	public MuseumJson random() {
+		RandomData randomData = new RandomData();
+		return new MuseumJson(
+				null,
+				randomData.randomMuseum(),
+				randomData.randomDescription(),
+				randomData.photoMuseum(),
+				new GeoJson().random()
+		);
+	}
+
+	public MuseumJson fromEntity(MuseumEntity museum) {
+		return new MuseumJson(
+				museum.getId(),
+				museum.getTitle(),
+				museum.getDescription(),
+				museum.getPhoto(),
+				new GeoJson(
+						null,
+						museum.getCity(),
+						new CountryJson(
+								museum.getCountryId(),
+								new CountryRepositorySpringJdbc().findCountryById(museum.getCountryId()).getName()
+						)
+
+				)
+		);
+	}
 }

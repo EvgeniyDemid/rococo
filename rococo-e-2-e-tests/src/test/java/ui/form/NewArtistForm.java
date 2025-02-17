@@ -14,8 +14,8 @@ public class NewArtistForm {
 			fieldBiography = $x("(//textarea[@name='biography']//../span)[1]"),
 			fieldBiographyInput = $x("//textarea[@name='biography']"),
 			errorName = $x("(//span[@class='text-error-400'])[1]"),
-			errorBiography = $x("(//span[@class='text-error-400'])[3]"),
-			alertNewArtistAdd = $x("//div[@class='text-base']");
+			errorBiography = $x("(//span[@class='text-error-400'])[3]");
+
 
 
 }

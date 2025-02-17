@@ -20,6 +20,6 @@ public class PaintingEntityRowMapper implements RowMapper<PaintingEntity> {
 		painting.setArtistId((UUID) rs.getObject("artist_id"));
 		painting.setMuseumId((UUID) rs.getObject("museum_id"));
 		painting.setContent(rs.getString("content"));
-		return null;
+		return painting;
 	}
 }

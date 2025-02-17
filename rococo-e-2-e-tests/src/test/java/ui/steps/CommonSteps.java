@@ -42,8 +42,14 @@ public class CommonSteps <T extends CommonSteps<?>> {
 	}
 	@Step("Нажать на кнопку 'Добавить' ")
 	@SuppressWarnings("unchecked")
-	public T clickAddButton(){
-		commonElements.addButton.click();
+	public T clickSubmitButton(){
+		commonElements.submitButton.click();
 		return  (T) this;
+	}
+	@Step("Проверить текст алерта ")
+	@SuppressWarnings("unchecked")
+	public T checkAlert(String text){
+	commonElements.	alert.shouldBe(text(text));
+	return (T) this;
 	}
 }

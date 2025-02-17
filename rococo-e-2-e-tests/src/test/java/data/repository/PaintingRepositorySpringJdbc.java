@@ -8,8 +8,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.util.Optional;
 import java.util.UUID;
@@ -23,21 +21,15 @@ public class PaintingRepositorySpringJdbc implements PaintingRepository {
 		KeyHolder kh = new GeneratedKeyHolder();
 		jdbcPaintingTemplate.update(con -> {
 					PreparedStatement ps = con.prepareStatement(
-							"INSERT INTO painting (title,description,content,museum_id,artist_id)" +
-									" VALUES(?,?,?,?,?)",
+							"INSERT INTO painting (title,description,museum_id,artist_id)" +
+									" VALUES(?,?,?,?)",
 							PreparedStatement.RETURN_GENERATED_KEYS
 					);
-					try {
-						FileInputStream fis = new FileInputStream(paintingEntity.getContent());
-						ps.setString(1, paintingEntity.getTitle());
-						ps.setString(2, paintingEntity.getDescription());
-						ps.setBinaryStream(3, fis, fis.available());
-						ps.setObject(4, paintingEntity.getMuseumId());
-						ps.setObject(5, paintingEntity.getArtistId());
-						return ps;
-					} catch (IOException e) {
-						throw new RuntimeException(e);
-					}
+					ps.setString(1, paintingEntity.getTitle());
+					ps.setString(2, paintingEntity.getDescription());
+					ps.setObject(3, paintingEntity.getMuseumId());
+					ps.setObject(4, paintingEntity.getArtistId());
+					return ps;
 				}, kh
 		);
 		paintingEntity.setId((UUID) kh.getKeys().get("id"));
@@ -71,10 +63,17 @@ public class PaintingRepositorySpringJdbc implements PaintingRepository {
 	}
 
 	@Override
-	public void deletePainting(UUID id) {
-		jdbcPaintingTemplate.update(
-				"DELETE FROM painting WHERE id=?",
-				id
-		);
+	public void deletePaintingById(UUID id) {
+		jdbcPaintingTemplate.update("DELETE FROM painting WHERE id=?", id);
+	}
+
+	@Override
+	public void deletePaintingByMuseumId(UUID id) {
+		jdbcPaintingTemplate.update("DELETE FROM painting WHERE museum_id=?", id);
+	}
+
+	@Override
+	public void deletePaintingByArtistId(UUID id) {
+		jdbcPaintingTemplate.update("DELETE FROM painting WHERE artist_id=?", id);
 	}
 }

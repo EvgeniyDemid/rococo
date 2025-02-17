@@ -12,7 +12,6 @@ import jupiter.annotation.TestPainting;
 import model.PaintingJson;
 import org.junit.jupiter.api.extension.*;
 import org.junit.platform.commons.support.AnnotationSupport;
-import testData.PaintingData;
 
 public class PaintingExtension implements BeforeEachCallback, ParameterResolver, AfterEachCallback {
 	private static final ExtensionContext.Namespace NAMESPACE = ExtensionContext.Namespace.create(PaintingExtension.class);
@@ -27,7 +26,7 @@ public class PaintingExtension implements BeforeEachCallback, ParameterResolver,
 				context.getRequiredTestMethod(),
 				TestPainting.class).ifPresent(testPainting -> {
 
-			PaintingJson painting = PaintingData.paintingData[0];
+			PaintingJson painting = new PaintingJson().random();
 
 			painting.getMuseum().getGeo().getCountry().setId(
 					countryJdbc.createCountry(
@@ -57,15 +56,16 @@ public class PaintingExtension implements BeforeEachCallback, ParameterResolver,
 	}
 
 	@Override
-	public void afterEach(ExtensionContext context) throws Exception {
-		countryJdbc.deleteCountry(
-				context.getStore(NAMESPACE).
-						get(context.getUniqueId(),PaintingJson.class).
-						getMuseum().
-						getGeo().
-						getCountry().
-						getId())
-		;
+	public void afterEach(ExtensionContext context) {
+		AnnotationSupport.findAnnotation(
+				context.getRequiredTestMethod(),
+				TestPainting.class).ifPresent(testPainting -> {
+			PaintingJson paintingJson = context.getStore(NAMESPACE).get(context.getUniqueId(), PaintingJson.class);
+			painJdbc.deletePaintingById(paintingJson.getId());
+			artistJdbc.deleteArtist(paintingJson.getArtist().getId());
+			musJdbc.deleteMuseum(paintingJson.getMuseum().getId());
+			countryJdbc.deleteCountry(paintingJson.getMuseum().getGeo().getCountry().getId());
+		});
 	}
 
 	@Override
